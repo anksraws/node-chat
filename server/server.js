@@ -19,14 +19,19 @@ io.on('connection', (socket) => {
     	createAt: 123
     });
            
-     socket.emit('newMessage', {
+     /*socket.emit('newMessage', {.     //emits an event to a single connection
        from: 'amit',
        text: 'netflix subscription',
        createAt:123
-     });
+     });*/
                  //emit used to creating an event and on listens event
     socket.on('createMessage', (message) => {
     	console.log('createMessage' , message);
+    	io.emit('newMessage', {             //io data emits an event to every single connection 
+    		from: message.from,
+    		text: message.text,
+    		createAt: new Date().getTime()
+    	})
     })
 
 	socket.on('disconnect',() => {
